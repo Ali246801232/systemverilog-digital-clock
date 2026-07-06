@@ -1,4 +1,10 @@
-course/
-*.docx
-*.pdf
+# Microsoft Word files
 *.tmp
+~$*.doc*
+~$*.dot*
+Backup of *.doc*
+
+# Project-specific
+course/
+Project Report.pdf
+Project Report.docx
