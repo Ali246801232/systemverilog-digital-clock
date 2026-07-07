@@ -481,9 +481,11 @@ module top;
         run_test();
     end
 
+    localparam real START_TIME = 0.0;
     initial begin
         $dumpfile("dump.vcd");
-        $dumpvars(0, top);
+        #(START_TIME) $dumpvars(0, top);
+	    #(61360);
     end
 
 endmodule
