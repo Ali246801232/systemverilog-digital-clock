@@ -75,7 +75,7 @@ endmodule
 
 // Digital Clock: top module
 module digital_clock #(
-    parameter DIV_FACTOR = 100_000_000  // 1 second = 1000000000 ns
+    parameter DIV_FACTOR = 100_000_000  // clk = 10 ns -> x100,000,00 = 1 second
 ) (
     input  logic       clk,
     input  logic       rst_n,
