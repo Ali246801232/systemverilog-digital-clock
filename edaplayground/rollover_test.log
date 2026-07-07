@@ -1,4 +1,4 @@
-[2026-07-07 01:19:55 UTC] vlib work && vlog '-timescale' '1ns/1ns' '-sv2k9' +incdir+$RIVIERA_HOME/vlib/uvm-1.2/src -l uvm_1_2 -err VCP2947 W9 -err VCP2974 W9 -err VCP3003 W9 -err VCP5417 W9 -err VCP6120 W9 -err VCP7862 W9 -err VCP2129 W9 design.sv testbench.sv  && vsim -c -do "vsim +access+r +UVM_TESTNAME=rollover_test; run -all; exit"  
+[2026-07-07 10:33:50 UTC] vlib work && vlog '-timescale' '1ns/1ns' '-sv2k9' +incdir+$RIVIERA_HOME/vlib/uvm-1.2/src -l uvm_1_2 -err VCP2947 W9 -err VCP2974 W9 -err VCP3003 W9 -err VCP5417 W9 -err VCP6120 W9 -err VCP7862 W9 -err VCP2129 W9 design.sv testbench.sv  && vsim -c -do "vsim +access+r +UVM_TESTNAME=rollover_test; run -all; exit"  
 VSIMSA: Configuration file changed: `/home/runner/library.cfg'
 ALIB: Library "work" attached.
 work = ./work/work.lib
@@ -35,7 +35,7 @@ done
 # KERNEL: Warning: Contact Aldec for available upgrade options - sales@aldec.com.
 # KERNEL: SLP simulation initialization done - time: 0.0 [s].
 # KERNEL: Kernel process initialization done.
-# Allocation: Simulator allocated 29457 kB (elbread=2126 elab2=22483 kernel=4847 sdf=0)
+# Allocation: Simulator allocated 29457 kB (elbread=2126 elab2=22482 kernel=4847 sdf=0)
 # KERNEL: UVM_INFO ./uvm-1.2/src/base/uvm_root.svh(392) @ 0: reporter [UVM/RELNOTES] 
 # KERNEL: ----------------------------------------------------------------
 # KERNEL: UVM-1.2
@@ -60,9 +60,9 @@ done
 # KERNEL: 
 # KERNEL: ASDB file was created in location /home/runner/dataset.asdb
 # KERNEL: UVM_INFO @ 0: reporter [RNTST] Running test rollover_test...
-# KERNEL: UVM_INFO ./uvm-1.2/src/base/uvm_objection.svh(1271) @ 864300000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
-# KERNEL: UVM_INFO /home/runner/testbench.sv(247) @ 864300000: uvm_test_top.env.scb [SCB] Scoreboard summary: 86400 passed, 0 failed
-# KERNEL: UVM_INFO ./uvm-1.2/src/base/uvm_report_server.svh(869) @ 864300000: reporter [UVM/REPORT/SERVER] 
+# KERNEL: UVM_INFO ./uvm-1.2/src/base/uvm_objection.svh(1271) @ 864200000: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# KERNEL: UVM_INFO /home/runner/testbench.sv(247) @ 864200000: uvm_test_top.env.scb [SCB] Scoreboard summary: 86400 passed, 0 failed
+# KERNEL: UVM_INFO ./uvm-1.2/src/base/uvm_report_server.svh(869) @ 864200000: reporter [UVM/REPORT/SERVER] 
 # KERNEL: --- UVM Report Summary ---
 # KERNEL: 
 # KERNEL: ** Report counts by severity
@@ -77,11 +77,11 @@ done
 # KERNEL: [UVM/RELNOTES]     1
 # KERNEL: 
 # RUNTIME: Info: RUNTIME_0068 uvm_root.svh (521): $finish called.
-# KERNEL: Time: 864300 ns,  Iteration: 57,  Instance: /top,  Process: @INITIAL#481_2@.
-# KERNEL: stopped at time: 864300 ns
+# KERNEL: Time: 864200 ns,  Iteration: 57,  Instance: /top,  Process: @INITIAL#479_2@.
+# KERNEL: stopped at time: 864200 ns
 # VSIM: Simulation has finished. There are no more test vectors to simulate.
 # VSIM: Simulation has finished.
 Finding VCD file...
 ./dump.vcd
-[2026-07-07 01:20:51 UTC] Opening EPWave...
+[2026-07-07 10:34:32 UTC] Opening EPWave...
 Done

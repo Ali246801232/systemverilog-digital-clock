@@ -31,8 +31,8 @@ package clock_pkg;
 
         rand bit reset_n;
         rand int duration;
-        rand int div_factor;
-        bit counting;
+        rand int div_factor;  // to control test speed
+        bit counting;  // to avoid counting during setup/cleanup
 
         bit [5:0] sec;
         bit [5:0] min;
@@ -87,7 +87,7 @@ package clock_pkg;
                 vif.rst_n = req.reset_n;
                 vif.counting = req.counting;
                 repeat (req.duration) @(posedge vif.clk);
-                @(negedge vif.clk);
+                @(negedge vif.clk);  // wait one extra negedge to avoid miscounting last test
                 vif.counting = 0;
                 seq_item_port.item_done();
             end
@@ -276,7 +276,7 @@ package clock_pkg;
 
     // Sequences
 
-    class reset_seq extends uvm_sequence #(clk_seq_item);
+    class reset_seq extends uvm_sequence #(clk_seq_item);  // test active-low reset works
         `uvm_object_utils(reset_seq)
 
         function new(string name = "reset_seq");
@@ -286,12 +286,14 @@ package clock_pkg;
         task body();
             clk_seq_item item;
 
+            // 15 clock cycles with reset_n = 0 - clock should not tick
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 0;
             item.duration = 15;
             finish_item(item);
 
+            // 15 clock cycles with reset_n = 1 - clock should tick every DIV_FACTOR
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 1;
@@ -300,7 +302,7 @@ package clock_pkg;
         endtask
     endclass
 
-    class seconds_count_seq extends uvm_sequence #(clk_seq_item);
+    class seconds_count_seq extends uvm_sequence #(clk_seq_item);  // test seconds update every DIV_FACTOR
         `uvm_object_utils(seconds_count_seq)
 
         int div_factor;
@@ -314,6 +316,7 @@ package clock_pkg;
         task body();
             clk_seq_item item;
 
+            // Set reset_n = 0 and allow to settle
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 0;
@@ -321,15 +324,16 @@ package clock_pkg;
             item.counting = 0;
             finish_item(item);
 
+            // Let clock count up to DIV_FACTOR * 59
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 1;
-            item.duration = div_factor * 59; // sec: 0 -> 59, no rollover into min
+            item.duration = div_factor * 59;
             finish_item(item);
         endtask
     endclass
 
-    class rollover_seq extends uvm_sequence #(clk_seq_item);
+    class rollover_seq extends uvm_sequence #(clk_seq_item);  // test every combination
         `uvm_object_utils(rollover_seq)
         int div_factor;
 
@@ -342,6 +346,7 @@ package clock_pkg;
         task body();
             clk_seq_item item;
 
+            // Set reset_n = 0 and allow to settle
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 0;
@@ -349,13 +354,7 @@ package clock_pkg;
             item.counting = 0;
             finish_item(item);
 
-            item = clk_seq_item::type_id::create("item");
-            start_item(item);
-            item.reset_n = 1;
-            item.duration = 10;
-            item.counting = 0;
-            finish_item(item);
-
+            // Let clock count up one full day
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 1;
@@ -482,11 +481,11 @@ module top;
     end
 
     localparam real START_TIME = 0.0;
-    localparam real DURATION = 6130.0;
+    localparam real DURATION = 61345.0;
     initial begin
         $dumpfile("dump.vcd");
         #(START_TIME) $dumpvars(0, top);
-      #(DURATION);
+        #(DURATION);
     end
 
 endmodule

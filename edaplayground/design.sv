@@ -4,9 +4,9 @@
 // RTL Implementation of a Digital Clock
 //================================================================
 
-// Clock Divider: generates 1Hz enable pulse from fast clock
+// Clock Divider: generates DIV_FACTOR enable pulse from fast clock
 module clk_divider #(
-    parameter DIV_FACTOR = 100_000_000
+    parameter DIV_FACTOR = 100_000_000  // 1 second = 1000000000 ns
 ) (
     input  logic clk,
     input  logic rst_n,
@@ -75,7 +75,7 @@ endmodule
 
 // Digital Clock: top module
 module digital_clock #(
-    parameter DIV_FACTOR = 100_000_000
+    parameter DIV_FACTOR = 100_000_000  // 1 second = 1000000000 ns
 ) (
     input  logic       clk,
     input  logic       rst_n,
