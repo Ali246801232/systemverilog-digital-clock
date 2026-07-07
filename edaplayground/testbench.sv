@@ -481,7 +481,7 @@ module top;
     end
 
     localparam real START_TIME = 0.0;
-    localparam real DURATION = 61345.0;
+    localparam real DURATION = 61345.0;  // maximum EPWave width for rollover_test
     initial begin
         $dumpfile("dump.vcd");
         #(START_TIME) $dumpvars(0, top);
