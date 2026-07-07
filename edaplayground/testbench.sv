@@ -482,10 +482,11 @@ module top;
     end
 
     localparam real START_TIME = 0.0;
+    localparam real DURATION = 6130.0;
     initial begin
         $dumpfile("dump.vcd");
         #(START_TIME) $dumpvars(0, top);
-	    #(61360);
+      #(DURATION);
     end
 
 endmodule
