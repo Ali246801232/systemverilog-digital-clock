@@ -181,11 +181,11 @@ package clock_pkg;
                     model_min = 0;
                     model_hr = 0;
                 end else begin
-                    logic en_1hz = (clk_div_count == div_factor - 1);
-                    logic en_min = en_1hz && (model_sec == 59);
+                    logic en_sec = (clk_div_count == div_factor - 1);
+                    logic en_min = en_sec && (model_sec == 59);
                     logic en_hr  = en_min  && (model_min == 59);
 
-                    if (en_1hz) begin
+                    if (en_sec) begin
                         model_sec = (model_sec == 59) ? 0 : model_sec + 1;
                     end
                     if (en_min) begin
@@ -287,12 +287,12 @@ package clock_pkg;
         endtask
     endclass
 
-    class seconds_count_seq extends uvm_sequence #(clk_seq_item);  // test seconds update every DIV_FACTOR
-        `uvm_object_utils(seconds_count_seq)
+    class seconds_seq extends uvm_sequence #(clk_seq_item);  // test seconds update every DIV_FACTOR
+        `uvm_object_utils(seconds_seq)
 
         int div_factor;
 
-        function new(string name = "seconds_count_seq");
+        function new(string name = "seconds_seq");
             super.new(name);
             if (!uvm_config_db#(int)::get(null, "", "div_factor", div_factor))
                 div_factor = 1;
@@ -379,7 +379,7 @@ package clock_pkg;
         `uvm_component_utils(seconds_test)
 
         clk_env env;
-        seconds_count_seq seq;
+        seconds_seq seq;
 
         function new(string name = "seconds_test", uvm_component parent = null);
             super.new(name, parent);
@@ -388,7 +388,7 @@ package clock_pkg;
         function void build_phase(uvm_phase phase);
             super.build_phase(phase);
             env = clk_env::type_id::create("env", this);
-            seq = seconds_count_seq::type_id::create("seq", this);
+            seq = seconds_seq::type_id::create("seq", this);
         endfunction
 
         task run_phase(uvm_phase phase);

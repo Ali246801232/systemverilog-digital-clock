@@ -10,7 +10,7 @@ module clk_divider #(
 ) (
     input  logic clk,
     input  logic rst_n,
-    output logic en_1hz
+    output logic en
 );
     integer count;
 
@@ -23,7 +23,7 @@ module clk_divider #(
             count <= count + 1;
     end
 
-    assign en_1hz = (count == DIV_FACTOR - 1);
+    assign en = (count == DIV_FACTOR - 1);
 endmodule
 
 
@@ -83,20 +83,20 @@ module digital_clock #(
     output logic [5:0] min,
     output logic [4:0] hr
 );
-    logic en_1hz;
+    logic en_sec;
     logic en_min;
     logic en_hr;
 
     clk_divider #(.DIV_FACTOR(DIV_FACTOR)) u_div (
         .clk    (clk),
         .rst_n  (rst_n),
-        .en_1hz (en_1hz)
+        .en (en_sec)
     );
 
     mod60_counter u_sec (
         .clk      (clk),
         .rst_n    (rst_n),
-        .en       (en_1hz),
+        .en       (en_sec),
         .count    (sec),
         .rollover (en_min)
     );
