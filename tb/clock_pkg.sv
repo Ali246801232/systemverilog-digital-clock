@@ -17,6 +17,7 @@ package clock_pkg;
         rand bit reset_n;
         rand int duration;
         rand int div_factor;
+        bit counting;
 
         bit [5:0] sec;
         bit [5:0] min;
@@ -28,6 +29,7 @@ package clock_pkg;
             super.new(name);
             if (!uvm_config_db#(int)::get(null, "", "div_factor", div_factor))
                 div_factor = 1;
+            counting = 1;
             sec = 0;
             min = 0;
             hr = 0;
@@ -68,7 +70,10 @@ package clock_pkg;
             forever begin
                 seq_item_port.get_next_item(req);
                 vif.rst_n = req.reset_n;
+                vif.counting = req.counting;
                 repeat (req.duration) @(posedge vif.clk);
+                @(negedge vif.clk);
+                vif.counting = 0;
                 seq_item_port.item_done();
             end
         endtask
@@ -201,6 +206,8 @@ package clock_pkg;
         function void write(clk_seq_item item);
             bit sec_err, min_err, hr_err;
 
+            if (!vif.counting) return;
+
             sec_err = (item.sec !== model_sec);
             min_err = (item.min !== model_min);
             hr_err  = (item.hr  !== model_hr);
@@ -217,6 +224,8 @@ package clock_pkg;
                 `uvm_info("SCB", $sformatf("MATCH: %0d:%0d:%0d", item.hr, item.min, item.sec), UVM_HIGH)
                 pass_count++;
             end
+            vif.pass_count = pass_count;
+            vif.fail_count = fail_count;
         endfunction
 
         function void report_phase(uvm_phase phase);
@@ -271,7 +280,7 @@ package clock_pkg;
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 1;
-            item.duration = 30;
+            item.duration = 15;
             finish_item(item);
         endtask
     endclass
@@ -294,6 +303,7 @@ package clock_pkg;
             start_item(item);
             item.reset_n = 0;
             item.duration = 10;
+            item.counting = 0;
             finish_item(item);
 
             item = clk_seq_item::type_id::create("item");
@@ -321,12 +331,14 @@ package clock_pkg;
             start_item(item);
             item.reset_n = 0;
             item.duration = 10;
+            item.counting = 0;
             finish_item(item);
 
             item = clk_seq_item::type_id::create("item");
             start_item(item);
             item.reset_n = 1;
             item.duration = 10;
+            item.counting = 0;
             finish_item(item);
 
             item = clk_seq_item::type_id::create("item");

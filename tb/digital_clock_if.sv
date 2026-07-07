@@ -9,4 +9,6 @@ interface digital_clock_if (input logic clk);
     logic [5:0] sec;
     logic [5:0] min;
     logic [4:0] hr;
+    int  pass_count, fail_count;
+    logic counting;
 endinterface

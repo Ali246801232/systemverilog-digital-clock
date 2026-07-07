@@ -27,8 +27,10 @@ This project implements a digital clock that increments every second, rolling ov
 
 The UVM testbench validates the design against all specification points through three tests:
 
-1. `reset_test`: Asynchronous reset result in all counters zero (`00:00:00`)
-2. `seconds_test`: Counters update correctly once every second
-3. `rollover_test`: Every possible time correctly increments and rolls over seconds, minutes, and hours
+1. `reset_test`: Tests that `reset` causes clock to remain at `00:00:00` when set.
+2. `seconds_test`: Tests that counters update once every second.
+3. `rollover_test`: Tests that every possible time correctly increments counters and rollovers.
 
 A UVM scoreboard automatically compares the DUT outputs against the expected values. To enable fast functional testing without having to wait for real-time seconds, there is a `DIV_FACTOR` parameter that is set to `1` during simulation.
+
+The scoreboard also uses a `counting` parameter in the `digital_clock_if` that ensures the setup and cleanup operations are not counted as part of the test. The virtual interface also adds a `pass_count` and `fail_count` that the scoreboard hooks into, to provie the test statuses to the top module so the waveform can display them.
