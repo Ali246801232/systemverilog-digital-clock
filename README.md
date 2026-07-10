@@ -8,19 +8,19 @@ This project implements a digital clock that increments every second, rolling ov
 
 ## Key Features
 
-- **24-hour timekeeping** – counts from `00:00:00` to `23:59:59`
-- **Modular architecture** – separate counters for seconds, minutes, and hours
-- **Clock divider** – generates a 1-second enable pulse
-- **Asynchronous active-low reset** – resets all counters to zero
-- **UVM verification** –  complete verification environment with using UVM
+- **24-hour timekeeping:** counts from `00:00:00` to `23:59:59`
+- **Modular architecture:** separate counters for seconds, minutes, and hours
+- **Clock divider:** generates a 1-second enable pulse
+- **Asynchronous active-low reset:** resets all counters to zero
+- **UVM verification:**  complete verification environment with using UVM
 
 ## Architecture
 
 | Module | Description |
 |--------|-------------|
 | `clk_divider` | Divides input clock to produce a 1 Hz tick enable |
-| `mod60_counter` | 6-bit counter that counts 0–59 and asserts a rollover flag |
-| `mod24_counter` | 5-bit counter that counts 0–23 and asserts a rollover flag |
+| `mod60_counter` | 6-bit counter that counts 0-59 and asserts a rollover flag |
+| `mod24_counter` | 5-bit counter that counts 0-23 and asserts a rollover flag |
 | `digital_clock` | Top-level module that instantiates the counters and drives the `HH:MM:SS` outputs |
 
 ## Verification
