@@ -1,6 +1,6 @@
 # SystemVerilog Digital Clock
 
-A modular 24-hour digital clock (`HH:MM:SS`) designed in SystemVerilog and verified using a UVM-based testbench. The full runnable version of the code is available on [EDA Playground](https://www.edaplayground.com/x/qgSM); the code and test results are also in the [edaplayground](./edaplayground/) of this repository.
+A modular 24-hour digital clock (`HH:MM:SS`) designed in SystemVerilog and verified using a UVM-based testbench. The full runnable version of the code is available on [EDA Playground](https://www.edaplayground.com/x/qgSM); the code and test results are also in the [edaplayground](./edaplayground/) folder of this repository.
 
 ## Overview
 
